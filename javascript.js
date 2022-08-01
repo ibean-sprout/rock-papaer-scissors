@@ -1,55 +1,112 @@
-//create computerplayer function that randomly generates rock/paper/scissors
+//not finished but i'm tired of working on it
+
+//let runningTotal = 0;
+
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
 
 
 
-//let computerplayer = Math.floor(Math.random(choices.length) * 3) + 1;
-//console.log(computerplayer[choices]);
+//TODO add logic to add player wins in this function?
 
-function computerplayer() {
-    computerChoices = ['rock', 'paper', 'scissors'];
-    //choice randon item from choices array
-    return computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+function computerTurn() {
+    let computerInput = Math.floor(Math.random() * 3);
+    if (computerInput === 0) {
+        computerInput = 'rock';
+    }  else if (computerInput === 1) {
+        computerInput = 'paper';
+    } else {
+        computerInput = 'scissors';
+    }
+    return computerInput;
+};
+
+const options = document.querySelectorAll('.userOptions');
+options.forEach((option) => {
+    option.addEventListener('click', function() {
+        ///fetch users input with the text value
+        //this = button that was clicked
+        const playerInput = this.textContent;
+        const computerInput = computerTurn()
+
+        compare(playerInput, computerInput)
+
+    })
+})
+// const testDiv = document.getElementsByClassName('myDiv');
+// //const para = document.createElement('div');
+// const para = document.createElement('p');
+// para.innerHTML += 'this worked';
+// testDiv[0].appendChild(para);
+
+let playerWins = 0;
+let computerWins = 0;
+const runningScore = `Player points: ${playerWins}, Computer points: ${computerWins}`;
+
+function compare(player, computer) {
+    let gameDiv = document.getElementsByClassName('myDiv');
+    const para = document.createElement('p');
+
+
+    const currentMatch = `You chose ${player} and the Computer chose ${computer}`;
+    
+
+    //check for a tie
+    if (player === computer) {
+        gameDiv.textContent = 'it\'s a tie';
+        return;
+    }
+
+    //rock
+    if (player === 'rock') {
+        if (computer === 'scissors') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
+            playerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
+            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        }
+        
+    }
+
+    //paper
+    if (player === 'paper') {
+        if (computer === 'rock') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
+            playerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
+            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        }
+    }
+
+    //scissors
+    else {
+        if (computer === 'paper') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
+            playerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
+            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        }
+    }
+    return playerWins, computerWins
+
 }
 
-console.log(computerplayer());
 
-let choices = ['rock', 'paper', 'scissors'];
-//function that plays a round of rock/paper/scissors
-function playRockPaperScissors(playerSelection, computerSelection) {
-        //all cases for player winning
 
-        if (playerSelection === 'rock' && computerSelection === 'scissors') {
-            return 'You win! Rock beats scissors';
-        } else if (playerSelection === 'paper' && computerSelection === 'rock'){
-            return 'You win! Paper beats rock';
-        } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-            return'You win! Scissors beats paper';
-        }
 
-        //all cases where computer wins
-
-        else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-            return 'You lose! Rock beats scissors';
-        } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-            return 'You lost! Paper beats rock';
-        } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-            return 'You win! Scissors beats paper';
-        }
-            
-        //all cases with a tie
-
-        else if (playerSelection === 'rock' && computerSelection === 'rock') {
-            return 'It\'s a tie';
-        } else if (playerSelection === 'paper' && computerSelection === 'paper') {
-            return 'It\'s a tie';
-        } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-            return 'It\'s a tie';
-        }
-            
-}
-
-const playerSelection = 'rock';
-const computerSelection = computerplayer();
-const result = `You chose ${playerSelection} and the computer chose ${computerSelection}`;
-console.log(result);
-console.log(playRockPaperScissors(playerSelection, computerSelection));
