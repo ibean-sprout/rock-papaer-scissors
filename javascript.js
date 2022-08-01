@@ -1,178 +1,112 @@
-//create computerplayer function that randomly generates rock/paper/scissors
+//not finished but i'm tired of working on it
+
+//let runningTotal = 0;
+
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
 
 
 
-//let computerplayer = Math.floor(Math.random(choices.length) * 3) + 1;
-//console.log(computerplayer[choices]);
+//TODO add logic to add player wins in this function?
 
 
+function computerTurn() {
+    let computerInput = Math.floor(Math.random() * 3);
+    if (computerInput === 0) {
+        computerInput = 'rock';
+    }  else if (computerInput === 1) {
+        computerInput = 'paper';
+    } else {
+        computerInput = 'scissors';
+    }
+    return computerInput;
+};
 
-let computerplayer = function() {
-    computerChoices = ['rock', 'paper', 'scissors'];
-    //choice randon item from choices array
-    return computerChoices[Math.floor(Math.random() * computerChoices.length)];
-}
+const options = document.querySelectorAll('.userOptions');
+options.forEach((option) => {
+    option.addEventListener('click', function() {
+        ///fetch users input with the text value
+        //this = button that was clicked
+        const playerInput = this.textContent;
+        const computerInput = computerTurn()
 
-//console.log("Computer:" + computerplayer());
+        compare(playerInput, computerInput)
 
-let choices = ['rock', 'paper', 'scissors'];
-//function that plays a round of rock/paper/scissors
+    })
+})
+// const testDiv = document.getElementsByClassName('myDiv');
+// //const para = document.createElement('div');
+// const para = document.createElement('p');
+// para.innerHTML += 'this worked';
+// testDiv[0].appendChild(para);
 
-let computerWins = 0;
 let playerWins = 0;
+let computerWins = 0;
+const runningScore = `Player points: ${playerWins}, Computer points: ${computerWins}`;
 
-//playerChoices
-const rockButton = document.getElementById('rock-btn');
-const paperButton = document.getElementById('paper-btn');
-const scissorsButton = document.getElementById('scissors-btn');
+function compare(player, computer) {
+    let gameDiv = document.getElementsByClassName('myDiv');
+    const para = document.createElement('p');
 
-function playRockPaperScissors(playerSelection, computerSelection) {
-        let result = '';
-        let winner = '';
+
+    const currentMatch = `You chose ${player} and the Computer chose ${computer}`;
     
 
+    //check for a tie
+    if (player === computer) {
+        gameDiv.textContent = 'it\'s a tie';
+        return;
+    }
 
-        //all cases for a player winning
-        if (playerSelection === computerSelection) {
-            winner = 'tie';
-            result = 'It was a tie!';
-        }
-        if (playerSelection === 'rock' && computerSelection === 'scissors') {
-            result = 'You win! Rock beats scissors';
-            winner = 'player';
+    //rock
+    if (player === 'rock') {
+        if (computer === 'scissors') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
             playerWins += 1;
-        } else if (playerSelection === 'paper' && computerSelection === 'rock'){
-            result = 'You win! Paper beats rock';
-            winner = 'player';
-            playerWins += 1;
-        } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-            result = 'You win! Scissors beats paper';
-            winner = 'player';
-            playerWins += 1;
-        }
-
-        //all cases where computer wins
-
-        else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-            result ='You lose! Rock beats scissors';
-            winner = 'computer';
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
             computerWins += 1;
-        } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-            result = 'You lost! Paper beats rock';
-            winner = 'computer';
-            computerWins += 1;
-        } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-            result ='You lost! Scissors beats paper';
-            winner = 'computer';
-            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
         }
         
-        //need to add the score to the player/computer span elements
-        //let parentDiv = document.getElementsByClassName('play-results');
-        //let playDiv = document.createElement('div');
-        //playDiv.classList.add('play-results');
-    
+    }
 
-            if (winner === 'player') {
-            
-                let addPlayerPointsToPage = document.querySelector('#player-points');
-                let playerPointsTextToAdd = document.createElement('p');
-                playerPointsTextToAdd.classList.add('content');
+    //paper
+    if (player === 'paper') {
+        if (computer === 'rock') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
+            playerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
+            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        }
+    }
 
-
-
-                addPlayerPointsToPage.innerHTML += playerPointsTextToAdd.textContent = playerWins;
-
-                
-
-            } else if (winner === 'computer') {
-                //computerWins++;
-                let addComputerPointsToPage = document.querySelector('#computer-points');
-                let computerPointsTextToAdd = document.createElement('p');
-                computerPointsTextToAdd.classList.add('computer-content');
-                addComputerPointsToPage.innerHTML += computerPointsTextToAdd.textContent = computerWins;
-                //parentDiv.appendChild(addComputerPointsToPage)
-            } else if (winner === 'tie') {
-                console.log('it was a tie, no points added')
-            }
-        
-    
-        
-        //console.log(`Player: ${playerWins}, Computer: ${computerWins}`);
-
-        return result;
-        
+    //scissors
+    else {
+        if (computer === 'paper') {
+            para.textContent = `${currentMatch}, which means You win`;
+            gameDiv[0].appendChild(para);
+            playerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        } else {
+            para.textContent = `${currentMatch}, which means Computer wins`;
+            gameDiv[0].appendChild(para);
+            computerWins += 1;
+            //para.textContent += ` .${runningScore}`;
+        }
+    }
+    return playerWins, computerWins
 
 }
 
-//function to run game based on which button is clicked
-//let playerSelection = '';
 
 
-function playGame() {
-    rockButton.addEventListener('click', () => {
-        const playerSelection = 'rock';
-        const computerSelection = computerplayer();
-        document.getElementById('game-results').innerHTML = playRockPaperScissors(playerSelection, computerSelection);
-        //return displayGameResults;
-        
-    });
-
-   
-    paperButton.addEventListener('click', () => {
-        const playerSelection = 'paper';
-        const computerSelection = computerplayer();
-        document.getElementById('game-results').innerHTML = playRockPaperScissors(playerSelection, computerSelection);
-        //return displayGameResults;
-        
-    });
-    
-    scissorsButton.addEventListener('click', () => {
-        const playerSelection = 'scissors';
-        const computerSelection = computerplayer();
-        document.getElementById('game-results').innerHTML = playRockPaperScissors(playerSelection, computerSelection);
-        //return displayGameResults;
-        
-    });
-
-}
-
-playGame();
-
-//let parentDiv = document.querySelector('#player-points');
-
-//let textToAdd = document.createElement('p');
-//textToAdd.classList.add('content');
-
-
-//textToAdd.textContent = 'I am here';
-//parentDiv.innerHTML += textToAdd.textContent = ' I am here';
-//parentDiv.innerHTML += textToAdd.textContent('I am here')
-
-
-//parentDiv.appendChild(textToAdd);
-
-//computer-points
-
-
-
-
-
-
-//playGame();
-//function to loop through the game as many times as the user specifies 
-//  function game() {
-//     for (let i = 1; i < 6; i++) {
-//         const playerSelection = playGame();
-//         const computerSelection = computerplayer();
-        
-//         //display the user and computer selection and round number they're playing
-//         const result = `You chose ${playerSelection} and the computer chose ${computerSelection}`;
-//         console.log(`Round ${i}: ${result}`);
-//         console.log(playRockPaperScissors(playerSelection, computerSelection));
-//     }    
-    
-// }
-
-// console.log(game());
 
